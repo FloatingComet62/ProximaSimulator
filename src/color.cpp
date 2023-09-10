@@ -68,10 +68,3 @@ Color::Color(std::string hex_string) {
   this->blue = hexFromStr(parsed_string.substr(4, 2));
   this->alpha = hexFromStr(parsed_string.substr(6, 2));
 }
-
-uint8_t* Color::toArray() {
-  // SDL2 IS BGRA
-  uint8_t* color =
-      new uint8_t[4]{this->blue, this->green, this->red, this->alpha};
-  return color;
-}

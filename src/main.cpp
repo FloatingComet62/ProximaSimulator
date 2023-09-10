@@ -26,11 +26,12 @@ class Window {
                           SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT);
     SDL_SetWindowTitle(this->winPtr, title.c_str());
   }
-  void setPixel(int x, int y, uint8_t *color) {
-    this->pixels[4 * (y * WIDTH + x) + 0] = color[0];
-    this->pixels[4 * (y * WIDTH + x) + 1] = color[1];
-    this->pixels[4 * (y * WIDTH + x) + 2] = color[2];
-    this->pixels[4 * (y * WIDTH + x) + 3] = color[3];
+  void setPixel(int x, int y, Color *color) {
+    // BGRA
+    this->pixels[4 * (y * WIDTH + x) + 0] = color->blue;
+    this->pixels[4 * (y * WIDTH + x) + 1] = color->green;
+    this->pixels[4 * (y * WIDTH + x) + 2] = color->red;
+    this->pixels[4 * (y * WIDTH + x) + 3] = color->alpha;
   }
   void update() {
     SDL_UpdateTexture(this->texturePtr, 0, this->pixels, 4 * WIDTH);
@@ -43,12 +44,14 @@ class Window {
 int frameCount = 0;
 
 void loop(Window *window) {
+  Color color(0, 0, 0);
   for (int i = 0; i < WIDTH; i++) {
     for (int j = 0; j < HEIGHT; j++) {
       float c = ((float)i / WIDTH) * (frameCount % 255);
-      // Color color(c, c, 0);
-      Color color("#eb4034");
-      window->setPixel(i, j, color.toArray());
+      color.red += i;
+      color.green += j;
+      color.blue += i * j;
+      window->setPixel(i, j, &color);
     }
   }
   frameCount++;
