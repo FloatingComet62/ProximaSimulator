@@ -7,6 +7,7 @@
 
 #include "../deps/include/SDL.h"
 #include "color.hpp"
+#include "error.hpp"
 
 class Window {
  private:
@@ -43,7 +44,8 @@ class Window {
 
 int frameCount = 0;
 
-void loop(Window *window) {
+void errorScreen(Window *window) {
+  // I think the cool pattern fits as a error screens
   Color color(0, 0, 0);
   for (int i = 0; i < WIDTH; i++) {
     for (int j = 0; j < HEIGHT; j++) {
@@ -58,15 +60,59 @@ void loop(Window *window) {
   window->update();
 }
 
+void loop(Window *window) {
+  if (Error::getInstance().hasError()) {
+    errorScreen(window);
+    return;
+  }
+  for (int i = 0; i < WIDTH; i++) {
+    for (int j = 0; j < HEIGHT; j++) {
+      float c = ((float)i / WIDTH) * (frameCount % 255);
+      Color color(0, 0, 0);
+      window->setPixel(i, j, &color);
+    }
+  }
+  frameCount++;
+  window->update();
+}
+
+void handle_keys(bool *keys) {
+  // if uncommented, pressing s is display the crash screen
+  // if (keys[SDLK_s]) {
+  //   Error::getInstance().sendError(1, "");
+  // }
+}
+
 int main() {
   Window *window = new Window("Proxima Simulation");
+
+  bool KEYS[322];  // 322 is the number of SDLK_DOWN events
+  for (int i = 0; i < 322; i++) {
+    KEYS[i] = false;
+  }
 
   int running = true;
   while (running) {
     SDL_Event event;
-    if (SDL_PollEvent(&event) && event.type == SDL_QUIT) {
-      running = false;
+    while (SDL_PollEvent(&event)) {
+      switch (event.type) {
+        case SDL_QUIT:
+          running = false;
+          break;
+
+        case SDL_KEYDOWN:
+          KEYS[event.key.keysym.sym] = true;
+          break;
+
+        case SDL_KEYUP:
+          KEYS[event.key.keysym.sym] = false;
+          break;
+
+        default:
+          break;
+      }
     }
+    handle_keys(KEYS);
     loop(window);
   }
 
