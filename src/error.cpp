@@ -3,12 +3,6 @@
 Error& Error::getInstance() {
   static Error instance;
   return instance;
-  // if (instance == NULL) {
-  //   instance = new Error();
-  //   instance->clearError();
-  //   return instance;
-  // }
-  // return instance;
 }
 void Error::clearError() {
   this->errorCode = 0;

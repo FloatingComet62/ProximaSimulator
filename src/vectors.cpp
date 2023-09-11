@@ -5,11 +5,6 @@ v2::v2(float i, float j) {
   this->j = j;
 }
 
-// v2::v2(v3 vec3) {
-//   this->i = vec3.i;
-//   this->j = vec3.j;
-// }
-
 v3::v3(float i, float j, float k) {
   this->i = i;
   this->j = j;
