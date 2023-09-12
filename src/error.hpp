@@ -4,7 +4,12 @@
 #include <iostream>
 #include <string>
 
-enum ErrorCodes { TESTING = 1, INVALID_HEX_STRING = 2 };
+enum ErrorCodes { NONE = 0, TESTING = 1, INVALID_HEX_STRING = 2 };
+
+/// @brief Convert ErrorCodes to Strings
+/// @param code ErrorCode
+/// @return Stringified ErrorCode
+std::string errorCodesToString(int code);
 
 /// # Error
 /// @brief Global Error management system
@@ -27,7 +32,6 @@ class Error {
 
   /// @brief Send an error
   /// @param errorCode Error code and
-  /// todo their purpose is yet to be decided
   /// @param errorMessage Error message
   void sendError(int errorCode, std::string errorMessage);
 
