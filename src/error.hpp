@@ -1,8 +1,13 @@
 #ifndef ERROR_H
 #define ERROR_H
 
-#include "string"
+#include <iostream>
+#include <string>
 
+enum ErrorCodes { TESTING = 1, INVALID_HEX_STRING = 2 };
+
+/// # Error
+/// @brief Global Error management system
 class Error {
  private:
   bool isError;
@@ -15,9 +20,22 @@ class Error {
  public:
   Error(Error const&) = delete;
   void operator=(Error const&) = delete;
+
+  /// @brief Get the singleton instance of Error
+  /// @return Singleton instance
   static Error& getInstance();
+
+  /// @brief Send an error
+  /// @param errorCode Error code and
+  /// todo their purpose is yet to be decided
+  /// @param errorMessage Error message
   void sendError(int errorCode, std::string errorMessage);
+
+  /// @brief Clear the error
   void clearError();
+
+  /// @brief Check if there exists an error
+  /// @return True if an error exists
   bool hasError();
 };
 

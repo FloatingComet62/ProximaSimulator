@@ -1,6 +1,9 @@
 #define SDL_MAIN_HANDLED
+
 #define WIDTH 800
 #define HEIGHT 600
+
+#define NUM_OF_SDLK_DOWN_EVENTS 322
 
 #include <iostream>
 #include <string>
@@ -9,6 +12,9 @@
 #include "color.hpp"
 #include "error.hpp"
 
+/// # SDL Window Manager
+/// @brief Handes the renderer, texture, and pixel data
+/// @authors FloatinComet62 SpaceFishDev
 class Window {
  private:
   SDL_Window *winPtr;
@@ -17,6 +23,8 @@ class Window {
   uint8_t *pixels;
 
  public:
+  /// @brief Initialize a window
+  /// @param title Title of the window
   Window(std::string title) {
     SDL_Init(SDL_INIT_VIDEO);
     pixels = new uint8_t[WIDTH * HEIGHT * 4];  // 4 bytes for color
@@ -27,6 +35,11 @@ class Window {
                           SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT);
     SDL_SetWindowTitle(this->winPtr, title.c_str());
   }
+
+  /// @brief Update the pixel buffer
+  /// @param x X coordinate
+  /// @param y Y coordinate
+  /// @param color Color to set at that pixel
   void setPixel(int x, int y, Color *color) {
     // BGRA
     this->pixels[4 * (y * WIDTH + x) + 0] = color->blue;
@@ -34,6 +47,21 @@ class Window {
     this->pixels[4 * (y * WIDTH + x) + 2] = color->red;
     this->pixels[4 * (y * WIDTH + x) + 3] = color->alpha;
   }
+
+  /// @brief Get the color of the pixel
+  /// @param x X coordinate
+  /// @param y Y coordinate
+  /// @return The color at that pixel
+  Color getPixel(int x, int y) {
+    int blue = this->pixels[4 * (y * WIDTH + x) + 0];
+    int green = this->pixels[4 * (y * WIDTH + x) + 1];
+    int red = this->pixels[4 * (y * WIDTH + x) + 2];
+    int alpha = this->pixels[4 * (y * WIDTH + x) + 3];
+
+    return Color(red, green, blue, alpha);
+  }
+
+  /// @brief Flush the pixels buffer on the screen
   void update() {
     SDL_UpdateTexture(this->texturePtr, 0, this->pixels, 4 * WIDTH);
     SDL_RenderCopy(this->rendererPtr, this->texturePtr, 0, 0);
@@ -44,6 +72,8 @@ class Window {
 
 int frameCount = 0;
 
+/// @brief Error screen display
+/// @param window Window to display on
 void errorScreen(Window *window) {
   // I think the cool pattern fits as a error screens
   Color color(0, 0, 0);
@@ -60,6 +90,8 @@ void errorScreen(Window *window) {
   window->update();
 }
 
+/// @brief Loop which should run every frame
+/// @param window Window to update
 void loop(Window *window) {
   if (Error::getInstance().hasError()) {
     errorScreen(window);
@@ -76,18 +108,22 @@ void loop(Window *window) {
   window->update();
 }
 
+/// @brief Handler for key presses
+/// @param keys Array of key presses
+/// @attention https://stackoverflow.com/a/3816128/15058455
 void handle_keys(bool *keys) {
   // if uncommented, pressing s is display the crash screen
   // if (keys[SDLK_s]) {
-  //   Error::getInstance().sendError(1, "");
+  //  Error::getInstance().sendError(ErrorCodes::TESTING, "");
   // }
 }
 
 int main() {
   Window *window = new Window("Proxima Simulation");
 
-  bool KEYS[322];  // 322 is the number of SDLK_DOWN events
-  for (int i = 0; i < 322; i++) {
+  /// @attention https://stackoverflow.com/a/3816128/15058455
+  bool KEYS[NUM_OF_SDLK_DOWN_EVENTS];
+  for (int i = 0; i < NUM_OF_SDLK_DOWN_EVENTS; i++) {
     KEYS[i] = false;
   }
 

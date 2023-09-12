@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "component.hpp"
-#include "vectors.hpp"
+#include "transform.hpp"
 #include "world.hpp"
 
 class Object {
@@ -12,9 +12,7 @@ class Object {
   World world;
 
  public:
-  v2 position;
-  v2 velocity;
-  v2 acceleration;
+  Transform transform;
   std::vector<Component> components;
 
   Object();

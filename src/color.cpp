@@ -30,37 +30,40 @@ Color::Color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha) {
 Color::Color(std::string hex_string) {
   if (hex_string[0] == '#') hex_string.erase(0, 1);
   std::string parsed_string;
-  switch (hex_string.length()) {
-    case 3:
-      for (auto& character : hex_string) {
-        parsed_string += character;
-        parsed_string += character;
-      }
-      parsed_string += "ff";  // for alpha
-      break;
-    case 4:
-      for (auto& character : hex_string) {
-        parsed_string += character + character;
-      }
-      break;
-    case 6:
-      parsed_string += hex_string;
-      parsed_string += "ff";
-      break;
-    case 8:
-      parsed_string += hex_string;
-      break;
+  {
+    int hex_len = hex_string.length();
+    switch (hex_len) {
+      case 3:
+      case 4:
+        for (auto& character : hex_string) {
+          parsed_string += character;
+          parsed_string += character;
+        }
+        break;
+      case 8:
+      case 6:
+        parsed_string += hex_string;
+        break;
 
-    default:
-      break;
+      default:
+        break;
+    }
+    if (hex_len == 3 || hex_len == 6) {
+      parsed_string += "ff";  // for alpha
+    }
   }
-  // parsed_string example ->
-  // 17a8e203
 
   if (parsed_string.length() != 8) {
     // some weird invalid hex was provided
-    std::cout << hex_string << " is not a valid hex string\n";
-    std::exit(1);
+    std::string errorMessage = hex_string;
+    errorMessage += " is not a valid hex string\n";
+    Error::getInstance().sendError(ErrorCodes::INVALID_HEX_STRING,
+                                   errorMessage);
+    this->red = 0;
+    this->green = 0;
+    this->blue = 0;
+    this->alpha = 0;
+    return;
   }
 
   this->red = hexFromStr(parsed_string.substr(0, 2));
