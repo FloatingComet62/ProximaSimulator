@@ -17,7 +17,7 @@ class World {
   float gravity;
 
   /// @brief Initialize the world
-  World();
+  World(float gravity = 0);
 
   /// @brief Add an object to the world
   /// @param object Object to add

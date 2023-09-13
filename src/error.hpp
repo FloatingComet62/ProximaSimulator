@@ -23,12 +23,12 @@ class Error {
   Error() {}
 
  public:
-  Error(Error const&) = delete;
-  void operator=(Error const&) = delete;
+  Error(Error const*) = delete;
+  void operator=(Error const*) = delete;
 
   /// @brief Get the singleton instance of Error
   /// @return Singleton instance
-  static Error& getInstance();
+  static Error* getInstance();
 
   /// @brief Send an error
   /// @param errorCode Error code and

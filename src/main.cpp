@@ -10,7 +10,6 @@
 
 #include "../deps/include/SDL.h"
 #include "color.hpp"
-#include "error.hpp"
 
 /// # SDL Window Manager
 /// @brief Handes the renderer, texture, and pixel data
@@ -90,17 +89,17 @@ void errorScreen(Window *window) {
   window->update();
 }
 
+Color color("#3ede69");
+
 /// @brief Loop which should run every frame
 /// @param window Window to update
 void loop(Window *window) {
-  if (Error::getInstance().hasError()) {
+  if (Error::getInstance()->hasError()) {
     errorScreen(window);
     return;
   }
   for (int i = 0; i < WIDTH; i++) {
     for (int j = 0; j < HEIGHT; j++) {
-      float c = ((float)i / WIDTH) * (frameCount % 255);
-      Color color(0, 0, 0);
       window->setPixel(i, j, &color);
     }
   }
@@ -113,9 +112,11 @@ void loop(Window *window) {
 /// @attention https://stackoverflow.com/a/3816128/15058455
 void handle_keys(bool *keys) {
   // if uncommented, pressing s is display the crash screen
-  // if (keys[SDLK_s]) {
-  //  Error::getInstance().sendError(ErrorCodes::TESTING, "");
-  // }
+  if (keys[SDLK_s]) {
+    Error::getInstance()->sendError(ErrorCodes::TESTING, "");
+  } else if (keys[SDLK_c]) {
+    Error::getInstance()->clearError();
+  }
 }
 
 int main() {

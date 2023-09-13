@@ -16,9 +16,9 @@ std::string errorCodesToString(int code) {
   }
 }
 
-Error& Error::getInstance() {
+Error* Error::getInstance() {
   static Error instance;
-  return instance;
+  return &instance;
 }
 void Error::clearError() {
   this->errorCode = ErrorCodes::NONE;

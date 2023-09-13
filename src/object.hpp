@@ -4,18 +4,18 @@
 #include <vector>
 
 #include "component.hpp"
-#include "transform.hpp"
-#include "world.hpp"
+
+class World;
 
 class Object {
  private:
-  World world;
+  World* world;
 
  public:
-  Transform transform;
   std::vector<Component> components;
 
-  Object();
+  Object(World* world);
+  void addComponent(Component component);
 };
 
 #endif

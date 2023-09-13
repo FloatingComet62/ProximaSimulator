@@ -57,8 +57,8 @@ Color::Color(std::string hex_string) {
     // some weird invalid hex was provided
     std::string errorMessage = hex_string;
     errorMessage += " is not a valid hex string\n";
-    Error::getInstance().sendError(ErrorCodes::INVALID_HEX_STRING,
-                                   errorMessage);
+    Error::getInstance()->sendError(ErrorCodes::INVALID_HEX_STRING,
+                                    errorMessage);
     this->red = 0;
     this->green = 0;
     this->blue = 0;
