@@ -113,7 +113,7 @@ void loop(Window *window) {
 void handle_keys(bool *keys) {
   // if uncommented, pressing s is display the crash screen
   if (keys[SDLK_s]) {
-    Error::getInstance()->sendError(ErrorCodes::TESTING, "");
+    Error::getInstance()->sendError(ErrorCodes::TESTING, "S key was pressed");
   } else if (keys[SDLK_c]) {
     Error::getInstance()->clearError();
   }

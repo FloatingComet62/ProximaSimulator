@@ -31,7 +31,7 @@ class Error {
   static Error* getInstance();
 
   /// @brief Send an error
-  /// @param errorCode Error code and
+  /// @param errorCode Error code
   /// @param errorMessage Error message
   void sendError(int errorCode, std::string errorMessage);
 
