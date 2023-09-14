@@ -40,8 +40,8 @@ Color::Color(std::string hex_string) {
           parsed_string += character;
         }
         break;
-      case 8:
       case 6:
+      case 8:
         parsed_string += hex_string;
         break;
 

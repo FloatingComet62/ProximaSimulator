@@ -1,5 +1,5 @@
-#ifndef VEC_H
-#define VEC_H
+#ifndef VEC
+#define VEC
 
 /// # Vector 2D
 /// @brief 2 dimentional vector

@@ -1,21 +1,28 @@
 #include "component.hpp"
 
+#include "components/mesh_render.hpp"
+#include "components/transform.hpp"
 #include "object.hpp"
 #include "world.hpp"
 
-Component::Component(World* world, Object* owner) { this->world = world; }
-void Component::setWorld(World* world) { this->world = world; }
-void Component::setOwner(Object* owner) { this->owner = owner; }
+std::string componentsToString(int componentType) {
+  switch (componentType) {
+    case Components::TRANSFORM:
+      return "transform";
 
+    case Components::MESH_RENDER:
+      return "mesh_render";
+
+    default:
+      break;
+  }
+  return "none";
+}
+
+Component::Component(World* world, Object* object) { this->world = world; }
+void Component::setWorld(World* world) { this->world = world; }
+void Component::setObject(Object* object) { this->object = object; }
+
+std::string Component::getName() { return "none"; }
 void Component::Start(){};
 void Component::Update(){};
-
-Transform::Transform(v2 position, v2 velocity, v2 acceleration,
-                     float rotation) {
-  this->position = position;
-  this->velocity = velocity;
-  this->acceleration = acceleration;
-  this->rotation = rotation;
-}
-void Transform::Start(){};
-void Transform::Update(){};

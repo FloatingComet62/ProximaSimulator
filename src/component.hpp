@@ -1,6 +1,7 @@
-#ifndef COMPONENT_H
-#define COMPONENT_H
+#ifndef COMPONENT
+#define COMPONENT
 
+#include "color.hpp"
 #include "vectors.hpp"
 
 /// @attention THANK YOU
@@ -8,36 +9,34 @@
 class World;
 class Object;
 
+enum Components { TRANSFORM, MESH_RENDER };
+
+/// @brief Convert Components to string
+std::string componentsToString(int componentType);
+
 /// # Component
 /// @brief An abstract component
 class Component {
  protected:
   World* world;
-  Object* owner;
+  Object* object;
 
  public:
-  Component(World* world, Object* owner);
+  Component(World* world, Object* object);
 
   void setWorld(World* world);
-  void setOwner(Object* owner);
+  void setObject(Object* object);
+
+  /// @brief Get the name of the component
+  /// @example Transform Component will return "transform"
+  /// @return The name of the component
+  static std::string getName();
 
   /// @brief Start function is called once at startup
   virtual void Start();
 
   /// @brief Update function is called every loop
   virtual void Update();
-};
-
-class Transform {
- public:
-  v2 position;
-  v2 velocity;
-  v2 acceleration;
-  float rotation;
-
-  Transform(v2 position, v2 velocity, v2 acceleration, float rotation);
-  void Start();
-  void Update();
 };
 
 #endif

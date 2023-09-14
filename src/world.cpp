@@ -1,6 +1,9 @@
 #include "world.hpp"
 
-World::World(float gravity) { this->gravity = gravity; }
+World::World(Window* window, float gravity) {
+  this->window = window;
+  this->gravity = gravity;
+}
 
 void World::addObject(Object object) { this->objects.push_back(object); }
 

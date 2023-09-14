@@ -1,6 +1,7 @@
-#ifndef OBJECT_H
-#define OBJECT_H
+#ifndef OBJECT
+#define OBJECT
 
+#include <optional>
 #include <vector>
 
 #include "component.hpp"
@@ -16,6 +17,7 @@ class Object {
 
   Object(World* world);
   void addComponent(Component component);
+  std::optional<Component> getComponent(int componentType);
 };
 
 #endif

@@ -1,15 +1,17 @@
-#ifndef WORLD_H
-#define WORLD_H
+#ifndef WORLD
+#define WORLD
 
 #include <vector>
 
 #include "medium.hpp"
 #include "object.hpp"
+#include "window.hpp"
 
 /// # World
 /// @brief The world environment
 class World {
  private:
+  Window* window;
   std::vector<Object> objects;
   std::vector<Medium> mediums;
 
@@ -17,7 +19,9 @@ class World {
   float gravity;
 
   /// @brief Initialize the world
-  World(float gravity = 0);
+  /// @param window Window to display the world
+  /// @param gravity Gravity of the world
+  World(Window* window, float gravity = 0);
 
   /// @brief Add an object to the world
   /// @param object Object to add
