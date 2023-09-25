@@ -10,11 +10,11 @@ class Transform : public Component {
   v2 acceleration;
   float rotation;
 
-  Transform(World* world, Object* object, v2 position, v2 velocity,
-            v2 acceleration, float rotation);
+  Transform(World* world, Object* object, v2 position = v2(),
+            v2 velocity = v2(), v2 acceleration = v2(), float rotation = 0.0);
   static std::string getName();
-  void Start() override;
-  void Update() override;
+  void start() override;
+  void update() override;
 };
 
 #endif

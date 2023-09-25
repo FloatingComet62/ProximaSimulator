@@ -12,5 +12,5 @@ Transform::Transform(World* world, Object* object, v2 position, v2 velocity,
   this->rotation = rotation;
 }
 std::string Transform::getName() { return "transform"; }
-void Transform::Start() {}
-void Transform::Update() {}
+void Transform::start() {}
+void Transform::update() {}

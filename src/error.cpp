@@ -5,6 +5,9 @@ std::string errorCodesToString(int code) {
     case ErrorCodes::NONE:
       return "None";
 
+    case ErrorCodes::SDL_ERROR:
+      return "SDL Error";
+
     case ErrorCodes::TESTING:
       return "Testing";
 

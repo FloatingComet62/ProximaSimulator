@@ -5,10 +5,23 @@
 #include <iostream>
 #include <string>
 
+#include "error.hpp"
 #include "color.hpp"
+// #include "components/mesh_render.hpp"
+// #include "components/transform.hpp"
 #include "window.hpp"
+#include "world.hpp"
 
-int frameCount = 0;
+int frame_count = 0;
+
+// Grid Config
+bool show_grid = true;
+Color grid_color("#777");
+int grid_size = 50;
+
+
+Color bg_color("#090909");
+std::vector<World> worlds;
 
 /// @brief Error screen display
 /// @param window Window to display on
@@ -17,18 +30,16 @@ void errorScreen(Window *window) {
   Color color(0, 0, 0);
   for (int i = 0; i < window->width; i++) {
     for (int j = 0; j < window->height; j++) {
-      float c = frameCount % 255;
+      float c = frame_count % 255;
       color.red += i + c;
       color.green += j + c;
       color.blue += i + c;
       window->setPixel(i, j, &color);
     }
   }
-  frameCount++;
+  frame_count++;
   window->update();
 }
-
-Color color("#3ede69");
 
 /// @brief Loop which should run every frame
 /// @param window Window to update
@@ -37,12 +48,29 @@ void loop(Window *window) {
     errorScreen(window);
     return;
   }
-  for (int i = 0; i < window->width; i++) {
-    for (int j = 0; j < window->height; j++) {
-      window->setPixel(i, j, &color);
+
+  for (auto &world : worlds) {
+    for (auto &obj : world.objects) {
+      obj->update();
     }
   }
-  frameCount++;
+
+  for (int i = 0; i < window->width; i++) {
+    for (int j = 0; j < window->height; j++) {
+      window->setPixel(i, j, &bg_color);
+
+      if (
+          show_grid &&
+          (
+            (i % grid_size == 0) ||
+            (j % grid_size == 0)
+          )
+        ) {
+        window->setPixel(i, j, &grid_color);
+      }
+    }
+  }
+  frame_count++;
   window->update();
 }
 
@@ -58,8 +86,15 @@ void handle_keys(bool *keys) {
   }
 }
 
+void check_for_sdl_errors() {
+  std::string sdl_error = SDL_GetError();
+  if (sdl_error.length() != 0) {
+    Error::getInstance()->sendError(ErrorCodes::SDL_ERROR, sdl_error);
+  }
+}
+
 int main() {
-  Window *window = new Window("Proxima Simulation", 800, 600);
+  Window *window = new Window("Proxima Simulation", 1200, 700, "ProximaSimulator.bmp");
 
   /// @attention https://stackoverflow.com/a/3816128/15058455
   bool KEYS[NUM_OF_SDLK_DOWN_EVENTS];
@@ -88,8 +123,22 @@ int main() {
           break;
       }
     }
+
     handle_keys(KEYS);
+    check_for_sdl_errors();
     loop(window);
+
+    // SOMEHOW THIS ISN'T WORKING, TODO FIX THIS SHIT
+    //
+    // World *world = new World(window, 9.8);
+    // Object *obj = new Object(world);
+    // Transform *transform = new Transform(world, obj, v2(100.0, 100.0));
+    // MeshRender *mr = new MeshRender(world, obj, window, Color("#542e7d"));
+    // obj->addComponent(*transform);
+    // obj->addComponent(*mr);
+    // world->addObject(obj);
+
+    // worlds.push_back(*world);
   }
 
   return 0;

@@ -33,10 +33,10 @@ class Component {
   static std::string getName();
 
   /// @brief Start function is called once at startup
-  virtual void Start();
+  virtual void start();
 
   /// @brief Update function is called every loop
-  virtual void Update();
+  virtual void update();
 };
 
 #endif

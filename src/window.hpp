@@ -25,6 +25,7 @@ class Window {
   /// @brief Initialize a window
   /// @param title Title of the window
   Window(std::string title, int width, int height);
+  Window(std::string title, int width, int height, std::string icon);
 
   /// @brief Update the pixel buffer
   /// @param x X coordinate

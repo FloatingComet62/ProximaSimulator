@@ -24,5 +24,5 @@ void Component::setWorld(World* world) { this->world = world; }
 void Component::setObject(Object* object) { this->object = object; }
 
 std::string Component::getName() { return "none"; }
-void Component::Start(){};
-void Component::Update(){};
+void Component::start(){};
+void Component::update(){};

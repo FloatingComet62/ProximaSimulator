@@ -4,7 +4,13 @@
 #include <iostream>
 #include <string>
 
-enum ErrorCodes { NONE = 0, TESTING = 1, INVALID_HEX_STRING = 2 };
+enum ErrorCodes {
+  NONE = 0,
+  TESTING = 1,
+  SDL_ERROR = 2,
+  INVALID_HEX_STRING = 3,
+  TRANSFORM_NOT_FOUND = 4
+};
 
 /// @brief Convert ErrorCodes to Strings
 /// @param code ErrorCode
