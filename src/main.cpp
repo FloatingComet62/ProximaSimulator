@@ -7,9 +7,10 @@
 
 #include "error.hpp"
 #include "color.hpp"
-// #include "components/mesh_render.hpp"
-// #include "components/transform.hpp"
+#include "components/mesh_render.hpp"
+#include "components/transform.hpp"
 #include "window.hpp"
+#include "component.hpp"
 #include "world.hpp"
 
 int frame_count = 0;
@@ -21,7 +22,7 @@ int grid_size = 50;
 
 
 Color bg_color("#090909");
-std::vector<World> worlds;
+std::vector<World*> worlds;
 
 /// @brief Error screen display
 /// @param window Window to display on
@@ -49,12 +50,6 @@ void loop(Window *window) {
     return;
   }
 
-  for (auto &world : worlds) {
-    for (auto &obj : world.objects) {
-      obj->update();
-    }
-  }
-
   for (int i = 0; i < window->width; i++) {
     for (int j = 0; j < window->height; j++) {
       window->setPixel(i, j, &bg_color);
@@ -70,6 +65,13 @@ void loop(Window *window) {
       }
     }
   }
+
+  for (auto &world : worlds) {
+    for (auto &obj : world->objects) {
+      obj->update();
+    }
+  }
+
   frame_count++;
   window->update();
 }
@@ -128,17 +130,20 @@ int main() {
     check_for_sdl_errors();
     loop(window);
 
-    // SOMEHOW THIS ISN'T WORKING, TODO FIX THIS SHIT
-    //
-    // World *world = new World(window, 9.8);
-    // Object *obj = new Object(world);
-    // Transform *transform = new Transform(world, obj, v2(100.0, 100.0));
-    // MeshRender *mr = new MeshRender(world, obj, window, Color("#542e7d"));
-    // obj->addComponent(*transform);
-    // obj->addComponent(*mr);
-    // world->addObject(obj);
+    auto world = new World(window, 9.8);
+    auto obj = new Object(world);
+    auto transform = new Transform(world, obj, v2(100, 100));
+    Color color = Color("#542e7d");
+    auto mr = new MeshRender(world, obj, window, &color);
+    obj->addComponent((Component*)transform);
+    obj->addComponent((Component*)mr);
+    world->addObject(obj);
 
-    // worlds.push_back(*world);
+    worlds.push_back(world);
+  }
+
+  for (auto& world : worlds) {
+    free(world);
   }
 
   return 0;

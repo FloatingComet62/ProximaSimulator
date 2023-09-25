@@ -9,13 +9,13 @@ class MeshRenderType {};
 
 class MeshRender : public Component {
  private:
-  Transform* transformOfObj;
+  Transform* transform;
 
  public:
   Window* window;
-  Color color;
+  Color* color;
 
-  MeshRender(World* world, Object* object, Window* window, Color color);
+  MeshRender(World* world, Object* object, Window* window, Color* color);
   static std::string getName();
   void start() override;
   void update() override;

@@ -13,10 +13,12 @@ Window::Window(std::string title, int width, int height) {
   SDL_SetWindowTitle(this->winPtr, title.c_str());
   SDL_SetWindowResizable(this->winPtr, SDL_TRUE);
 }
+
 Window::Window(std::string title, int width, int height, std::string icon) : Window(title, width, height) {
   SDL_Surface *img = SDL_LoadBMP(icon.c_str());
   SDL_SetWindowIcon(this->winPtr, img);
 }
+
 void Window::setPixel(int x, int y, Color *color) {
   if (x < 0 || x > this->width) return;
   if (y < 0 || y > this->height) return;

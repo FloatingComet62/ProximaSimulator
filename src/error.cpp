@@ -23,6 +23,7 @@ Error* Error::getInstance() {
   static Error instance;
   return &instance;
 }
+
 void Error::clearError() {
   this->errorCode = ErrorCodes::NONE;
   this->errorMessage = "";
@@ -42,4 +43,5 @@ void Error::sendError(int errorCode, std::string errorMessage) {
   std::cout << "Error Code: " << errorCodesToString(errorCode)
             << "\nError received: " << errorMessage << std::endl;
 }
+
 bool Error::hasError() { return this->isError; }

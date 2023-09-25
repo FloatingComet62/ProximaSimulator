@@ -1,8 +1,6 @@
 #ifndef WORLD
 #define WORLD
 
-#include <vector>
-
 #include "medium.hpp"
 #include "object.hpp"
 #include "window.hpp"

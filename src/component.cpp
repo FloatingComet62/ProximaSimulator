@@ -20,9 +20,13 @@ std::string componentsToString(int componentType) {
 }
 
 Component::Component(World* world, Object* object) { this->world = world; }
+
 void Component::setWorld(World* world) { this->world = world; }
+
 void Component::setObject(Object* object) { this->object = object; }
 
 std::string Component::getName() { return "none"; }
+
 void Component::start(){};
+
 void Component::update(){};
