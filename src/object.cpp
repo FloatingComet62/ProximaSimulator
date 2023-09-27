@@ -21,6 +21,12 @@ Optional<Component*> Object::getComponent(int componentType) {
   return Optional<Component*>();
 }
 
+void Object::start() {
+  for (auto& component : this->components) {
+    component->start();
+  }
+}
+
 void Object::update() {
   for (auto& component : this->components) {
     component->update();

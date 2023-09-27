@@ -4,7 +4,6 @@
 #include "medium.hpp"
 #include "object.hpp"
 #include "window.hpp"
-#include <corecrt_malloc.h>
 
 /// # World
 /// @brief The world environment

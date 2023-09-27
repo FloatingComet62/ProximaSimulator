@@ -105,6 +105,27 @@ int main() {
   }
 
   int running = true;
+
+  {
+    auto world = new World(window, 9.8);
+    auto obj = new Object(world);
+    auto transform = new Transform(world, obj, v2(100, 100));
+    Color color = Color("#542e7d");
+    auto mr = new MeshRender(world, obj, window, &color);
+    obj->addComponent((Component*)transform);
+    obj->addComponent((Component*)mr);
+    world->addObject(obj);
+
+    worlds.push_back(world);
+  }
+
+
+  for (auto &world : worlds) {
+    for (auto &obj : world->objects) {
+      obj->start();
+    }
+  }
+
   while (running) {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
@@ -129,17 +150,6 @@ int main() {
     handle_keys(KEYS);
     check_for_sdl_errors();
     loop(window);
-
-    auto world = new World(window, 9.8);
-    auto obj = new Object(world);
-    auto transform = new Transform(world, obj, v2(100, 100));
-    Color color = Color("#542e7d");
-    auto mr = new MeshRender(world, obj, window, &color);
-    obj->addComponent((Component*)transform);
-    obj->addComponent((Component*)mr);
-    world->addObject(obj);
-
-    worlds.push_back(world);
   }
 
   for (auto& world : worlds) {

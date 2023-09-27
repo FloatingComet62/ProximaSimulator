@@ -2,7 +2,6 @@
 #define OBJECT
 
 #include <vector>
-#include <corecrt_malloc.h>
 
 #include "component.hpp"
 #include "optional.hpp"
@@ -21,6 +20,7 @@ class Object {
   ~Object();
   void addComponent(Component* component);
   Optional<Component*> getComponent(int componentType);
+  void start();
   void update();
 };
 
