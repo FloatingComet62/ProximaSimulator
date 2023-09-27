@@ -16,8 +16,7 @@ jobs:
     - name: clone sdl deps
       run: git clone https://github.com/FloatingComet62/sdl_cdn
 
-    - run: pwd
-    - run: mv /sdl_cdn /
+    - run: mv ./sdl_cdn ./
     # - name: configure
     #   run: ./configure
     - name: make
