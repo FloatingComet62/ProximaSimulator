@@ -1,4 +1,4 @@
-name: C/C++ CI
+name: C++ Build test
 
 on:
   push:
@@ -13,6 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: clone sdl deps
+      run: git clone https://github.com/FloatingComet62/sdl_cdn
     # - name: configure
     #   run: ./configure
     - name: make
