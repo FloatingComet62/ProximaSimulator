@@ -4,6 +4,7 @@
 #include "medium.hpp"
 #include "object.hpp"
 #include "window.hpp"
+#include <corecrt_malloc.h>
 
 /// # World
 /// @brief The world environment
@@ -20,6 +21,8 @@ class World {
   /// @param window Window to display the world
   /// @param gravity Gravity of the world
   World(Window* window, float gravity = 0);
+
+  ~World();
 
   /// @brief Add an object to the world
   /// @param object Object to add

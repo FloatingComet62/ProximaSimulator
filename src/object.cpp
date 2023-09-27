@@ -1,10 +1,12 @@
 #include "object.hpp"
-
-#include "component.hpp"
-#include "error.hpp"
 #include "world.hpp"
 
 Object::Object(World* world) { this->world = world; }
+Object::~Object() {
+  for (int i = 0; i < this->components.size(); i++) {
+    free(this->components[i]);
+  }
+}
 
 void Object::addComponent(Component* component) {
   this->components.push_back(component);
