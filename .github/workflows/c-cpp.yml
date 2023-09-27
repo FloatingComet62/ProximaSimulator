@@ -12,10 +12,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: clone sdl deps
-      run: git clone https://github.com/FloatingComet62/sdl_cdn .
-    - run: ls
     - uses: actions/checkout@v3
+    - run: git init
+    - run: git remote add origin https://github.com/FloatingComet62/ProximaSimulator
+    - run: git fetch
+    - run: git reset origin/master
+    - run: git checkout -t origin/master
     # - name: configure
     #   run: ./configure
     - name: make
